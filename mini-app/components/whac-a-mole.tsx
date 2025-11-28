@@ -4,10 +4,10 @@ import { useEffect, useState, useRef } from "react";
 import { Button } from "@/components/ui/button";
 
 const MOLE_POSITIONS = [
-  { id: 0, className: "top-left" },
-  { id: 1, className: "top-right" },
-  { id: 2, className: "bottom-left" },
-  { id: 3, className: "bottom-right" },
+  { id: 0, label: "UP", className: "up" },
+  { id: 1, label: "LEFT", className: "left" },
+  { id: 2, label: "DOWN", className: "down" },
+  { id: 3, label: "RIGHT", className: "right" },
 ];
 
 export default function WhacAMole() {
@@ -76,19 +76,54 @@ export default function WhacAMole() {
   return (
     <div className="w-full max-w-md mx-auto p-4">
       <div className="text-2xl font-bold text-center mb-4">Score: {score}</div>
-      <div className="grid grid-cols-2 gap-4 mb-4">
-        {MOLE_POSITIONS.map((pos) => (
-          <div
-            key={pos.id}
-            className={`relative h-32 bg-gray-200 rounded-lg flex items-center justify-center ${
-              activeMole === pos.id ? "bg-yellow-300 animate-pulse" : ""
-            }`}
-          >
-            {activeMole === pos.id && (
-              <div className="text-4xl font-bold">🐹</div>
-            )}
-          </div>
-        ))}
+      <div className="grid grid-cols-3 gap-4 mb-4">
+        <div className="h-32"></div>
+        <div
+          key={MOLE_POSITIONS[0].id}
+          className={`relative h-32 bg-gray-200 rounded-lg flex items-center justify-center ${
+            activeMole === MOLE_POSITIONS[0].id ? "bg-yellow-300 animate-pulse" : ""
+          }`}
+        >
+          {activeMole === MOLE_POSITIONS[0].id && (
+            <div className="text-4xl font-bold">🐹</div>
+          )}
+          <span className="absolute bottom-1 text-sm font-medium">{MOLE_POSITIONS[0].label}</span>
+        </div>
+        <div className="h-32"></div>
+
+        <div
+          key={MOLE_POSITIONS[1].id}
+          className={`relative h-32 bg-gray-200 rounded-lg flex items-center justify-center ${
+            activeMole === MOLE_POSITIONS[1].id ? "bg-yellow-300 animate-pulse" : ""
+          }`}
+        >
+          {activeMole === MOLE_POSITIONS[1].id && (
+            <div className="text-4xl font-bold">🐹</div>
+          )}
+          <span className="absolute bottom-1 text-sm font-medium">{MOLE_POSITIONS[1].label}</span>
+        </div>
+        <div
+          key={MOLE_POSITIONS[2].id}
+          className={`relative h-32 bg-gray-200 rounded-lg flex items-center justify-center ${
+            activeMole === MOLE_POSITIONS[2].id ? "bg-yellow-300 animate-pulse" : ""
+          }`}
+        >
+          {activeMole === MOLE_POSITIONS[2].id && (
+            <div className="text-4xl font-bold">🐹</div>
+          )}
+          <span className="absolute bottom-1 text-sm font-medium">{MOLE_POSITIONS[2].label}</span>
+        </div>
+        <div
+          key={MOLE_POSITIONS[3].id}
+          className={`relative h-32 bg-gray-200 rounded-lg flex items-center justify-center ${
+            activeMole === MOLE_POSITIONS[3].id ? "bg-yellow-300 animate-pulse" : ""
+          }`}
+        >
+          {activeMole === MOLE_POSITIONS[3].id && (
+            <div className="text-4xl font-bold">🐹</div>
+          )}
+          <span className="absolute bottom-1 text-sm font-medium">{MOLE_POSITIONS[3].label}</span>
+        </div>
       </div>
       <div className="flex justify-center gap-4">
         <Button onClick={startGame}>Start</Button>
