@@ -12,6 +12,7 @@ const MOLE_POSITIONS = [
 
 export default function WhacAMole() {
   const [score, setScore] = useState(0);
+  const [hp, setHp] = useState(3);
   const [activeMole, setActiveMole] = useState<number | null>(null);
   const [isRunning, setIsRunning] = useState(false);
   const [isPaused, setIsPaused] = useState(false);
@@ -33,6 +34,15 @@ export default function WhacAMole() {
       if (intervalRef.current) clearInterval(intervalRef.current);
     };
   }, [isRunning, isPaused]);
+
+  useEffect(() => {
+        if (hp <= 0 && isRunning) {
+          setIsRunning(false);
+          setScore(0);
+          setActiveMole(null);
+          alert('Game Over');
+        }
+      }, [hp, isRunning]);
 
   // Handle key presses
   useEffect(() => {
@@ -75,7 +85,7 @@ export default function WhacAMole() {
 
   return (
     <div className="w-full max-w-md mx-auto p-4">
-      <div className="text-2xl font-bold text-center mb-4">Score: {score}</div>
+      <div className="text-2xl font-bold text-center mb-4">Score: {score} | HP: {hp}</div>
       <div className="grid grid-cols-3 gap-4 mb-4">
         <div className="h-32"></div>
         <div
