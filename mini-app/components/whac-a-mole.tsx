@@ -22,6 +22,7 @@ export default function WhacAMole() {
   const moleTimerRef = useRef<NodeJS.Timeout | null>(null);
 
   // Spawn a mole at random intervals
+  /* eslint-disable-next-line react-hooks/exhaustive-deps */
   useEffect(() => {
     if (!isRunning || isPaused) return;
 
@@ -39,7 +40,7 @@ export default function WhacAMole() {
       // Hide mole after 800ms if not hit
       setTimeout(() => {
         setActiveMole(null);
-        clearTimeout(moleTimerRef.current);
+        if (moleTimerRef.current) clearTimeout(moleTimerRef.current);
       }, 800);
     };
 
