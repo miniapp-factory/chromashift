@@ -22,3 +22,15 @@
 # 2025-11-28 05:11:40.202356
 +
 +Structure the game's interface as a grid of four large, interactive boxes that visually mimic the physical layout of the keyboard's arrow key cluster. Position three boxes on a bottom row, labeled "LEFT", "DOWN", and "RIGHT" from left to right. Place a single "UP" box centered directly above the "DOWN" box, completing the classic "T" shape.
+
+# 2025-11-29 07:12:44.547891
++The player should start with 3 HP.
++Each time the player presses the wrong key or fails to press the correct key, reduce HP by 1.
++If HP reaches 0, trigger the Game Over sequence that already exists (or create one if needed) and reset the score back to 0.
++This new HP system must integrate smoothly with the current code structure.
+
+# 2025-11-29 07:12:44.548265
++The player should start with 3 HP.
++Each time the player presses the wrong key or fails to press the correct key, reduce HP by 1.
++If HP reaches 0, trigger the Game Over sequence that already exists (or create one if needed) and reset the score back to 0.
++This new HP system must integrate smoothly with the current code structure.
