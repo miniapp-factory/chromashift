@@ -24,9 +24,15 @@ export default function WhacAMole() {
 
     const spawn = () => {
       const randomIndex = Math.floor(Math.random() * MOLE_POSITIONS.length);
-      setActiveMole(randomIndex);
+      const moleId = randomIndex;
+      setActiveMole(moleId);
       // Hide mole after 800ms if not hit
-      setTimeout(() => setActiveMole(null), 800);
+      setTimeout(() => {
+        if (activeMole === moleId) {
+          setHp((h) => h - 1);
+        }
+        setActiveMole(null);
+      }, 800);
     };
 
     intervalRef.current = setInterval(spawn, 1200);
@@ -47,7 +53,7 @@ export default function WhacAMole() {
   // Handle key presses
   useEffect(() => {
     const handleKey = (e: KeyboardEvent) => {
-      if (!isRunning || isPaused || activeMole === null) return;
+      if (!isRunning || isPaused) return;
       const keyMap: Record<string, number> = {
         ArrowUp: 0,
         ArrowRight: 1,
@@ -55,10 +61,16 @@ export default function WhacAMole() {
         ArrowLeft: 3,
       };
       const expected = keyMap[e.key];
-      if (expected === activeMole) {
+      if (activeMole === null) {
+        // Wrong key pressed when no mole is active
+        setHp((h) => h - 1);
+      } else if (expected === activeMole) {
         setScore((s) => s + 1);
         setActiveMole(null);
         // Play hit sound or animation here if desired
+      } else {
+        // Wrong key pressed when a mole is active
+        setHp((h) => h - 1);
       }
     };
     window.addEventListener("keydown", handleKey);
@@ -70,6 +82,7 @@ export default function WhacAMole() {
     setActiveMole(null);
     setIsRunning(true);
     setIsPaused(false);
+    setHp(3);
   };
 
   const pauseGame = () => {
