@@ -13,10 +13,13 @@ const MOLE_POSITIONS = [
 export default function WhacAMole() {
   const [score, setScore] = useState(0);
   const [hp, setHp] = useState(3);
+  const [notification, setNotification] = useState<string | null>(null);
+  const [showNotification, setShowNotification] = useState(false);
   const [activeMole, setActiveMole] = useState<number | null>(null);
   const [isRunning, setIsRunning] = useState(false);
   const [isPaused, setIsPaused] = useState(false);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
+  const moleTimerRef = useRef<NodeJS.Timeout | null>(null);
 
   // Spawn a mole at random intervals
   useEffect(() => {
@@ -26,12 +29,17 @@ export default function WhacAMole() {
       const randomIndex = Math.floor(Math.random() * MOLE_POSITIONS.length);
       const moleId = randomIndex;
       setActiveMole(moleId);
-      // Hide mole after 800ms if not hit
-      setTimeout(() => {
+      // Start 2‑second timer to deduct HP if mole not hit
+      moleTimerRef.current = setTimeout(() => {
         if (activeMole === moleId) {
           setHp((h) => h - 1);
+          setActiveMole(null);
         }
+      }, 2000);
+      // Hide mole after 800ms if not hit
+      setTimeout(() => {
         setActiveMole(null);
+        clearTimeout(moleTimerRef.current);
       }, 800);
     };
 
@@ -47,8 +55,19 @@ export default function WhacAMole() {
           setScore(0);
           setActiveMole(null);
           alert('Game Over');
+          setNotification('Game Over');
         }
       }, [hp, isRunning]);
+
+  useEffect(() => {
+    if (notification) {
+      setShowNotification(true);
+      const timer = setTimeout(() => {
+        setShowNotification(false);
+      }, 3000);
+      return () => clearTimeout(timer);
+    }
+  }, [notification]);
 
   // Handle key presses
   useEffect(() => {
@@ -56,9 +75,9 @@ export default function WhacAMole() {
       if (!isRunning || isPaused) return;
       const keyMap: Record<string, number> = {
         ArrowUp: 0,
-        ArrowRight: 1,
+        ArrowLeft: 1,
         ArrowDown: 2,
-        ArrowLeft: 3,
+        ArrowRight: 3,
       };
       const expected = keyMap[e.key];
       if (activeMole === null) {
@@ -96,9 +115,26 @@ export default function WhacAMole() {
     setActiveMole(null);
   };
 
+  useEffect(() => {
+    return () => {
+      clearTimeout(moleTimerRef.current);
+    };
+  }, []);
+
   return (
     <div className="w-full max-w-md mx-auto p-4">
       <div className="text-2xl font-bold text-center mb-4">Score: {score} | HP: {hp}</div>
+      {showNotification && notification && (
+        <div
+          className={`fixed top-4 left-1/2 transform -translate-x-1/2 ${
+            notification.includes('Game Over') ? 'bg-red-100 text-red-800' : 'bg-green-100 text-green-800'
+          } rounded-md p-2 shadow-md transition-opacity duration-500 ${
+            showNotification ? 'opacity-100' : 'opacity-0'
+          }`}
+        >
+          {notification}
+        </div>
+      )}
       <div className="grid grid-cols-3 gap-4 mb-4">
         <div className="h-32"></div>
         <div
