@@ -85,6 +85,7 @@ export default function WhacAMole() {
         setHp((h) => h - 1);
       } else if (expected === activeMole) {
         setScore((s) => s + 1);
+        clearTimeout(moleTimerRef.current);
         setActiveMole(null);
         // Play hit sound or animation here if desired
       } else {
