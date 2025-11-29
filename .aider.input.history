@@ -34,3 +34,53 @@
 +Each time the player presses the wrong key or fails to press the correct key, reduce HP by 1.
 +If HP reaches 0, trigger the Game Over sequence that already exists (or create one if needed) and reset the score back to 0.
 +This new HP system must integrate smoothly with the current code structure.
+
+# 2025-11-29 07:28:21.663119
++Fix the left-click and right-click detection so that both inputs properly register when hitting a mole.
++
++Improve the notification UI by making it more friendly:
++
++Use clearer wording
++
++Use smoother colors
++
++Add rounded corners and padding
++
++Make the message fade in/out gently
++
++Add a timer system:
++
++When a mole appears, start a 2-second countdown.
++
++If the player does NOT click the mole within 2 seconds, remove 1 HP.
++
++Combine this with the existing HP system where wrong clicks remove HP.
++
++If HP reaches 0, trigger Game Over and reset the score.
++
++Keep all existing mechanics and seamlessly integrate this new behavior into the current build
+
+# 2025-11-29 07:28:21.663467
++Fix the left-click and right-click detection so that both inputs properly register when hitting a mole.
++
++Improve the notification UI by making it more friendly:
++
++Use clearer wording
++
++Use smoother colors
++
++Add rounded corners and padding
++
++Make the message fade in/out gently
++
++Add a timer system:
++
++When a mole appears, start a 2-second countdown.
++
++If the player does NOT click the mole within 2 seconds, remove 1 HP.
++
++Combine this with the existing HP system where wrong clicks remove HP.
++
++If HP reaches 0, trigger Game Over and reset the score.
++
++Keep all existing mechanics and seamlessly integrate this new behavior into the current build
